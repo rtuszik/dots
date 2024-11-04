@@ -1,4 +1,4 @@
 return {
-    "Pocco81/true-zen.nvim",
-    lazy = false,
+  "Pocco81/true-zen.nvim",
+  lazy = false,
 }

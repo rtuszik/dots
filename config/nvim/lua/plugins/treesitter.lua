@@ -16,6 +16,14 @@ return {
             "vim",
             "yaml",
             "html",
+            "dockerfile",
+            "toml",
+            "css",
+            "git_config",
+            "gitignore",
+            "ssh_config",
+            "tmux",
+            "vim",
         })
     end,
 }

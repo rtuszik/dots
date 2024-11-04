@@ -1,4 +1,4 @@
 return {
-    "hrsh7th/nvim-cmp",
-    dependencies = { "hrsh7th/cmp-emoji", name = "codeium" },
+  "hrsh7th/nvim-cmp",
+  dependencies = { "hrsh7th/cmp-emoji", name = "codeium" },
 }

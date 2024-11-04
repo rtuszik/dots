@@ -7,6 +7,8 @@ return {
             "shfmt",
             "flake8",
             "prettier",
+            "ruff",
+            "djlint",
         },
     },
 }
