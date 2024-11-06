@@ -9,6 +9,7 @@ return {
             "prettier",
             "ruff",
             "djlint",
+            "pyright",
         },
     },
 }
