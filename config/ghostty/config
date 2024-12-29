@@ -1,0 +1,30 @@
+# GHOSTTY CONFIG - KoalaTerm
+
+## Shell
+shell-integration-features = sudo
+
+## Font
+font-family = Iosevka
+font-size = 14
+
+## Window-Settings
+macos-non-native-fullscreen = true
+macos-titlebar-style = transparent
+window-save-state = never
+background-opacity = 0.95
+background-blur-radius = 20
+
+## Theme 
+## show built-in with ghostty +list-themes
+theme = UltraDark
+
+## Themes I Like
+## Hurtado
+## Catpuccin
+## midnight-in-mojave
+## Monokai Vivid
+## Paul Miller
+## Peppermint
+## UltraDark
+
+## Unikitty ;) 
