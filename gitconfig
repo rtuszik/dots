@@ -1,0 +1,50 @@
+[user]
+    name = FIRST LAST
+    email = MAIL@MAIL.COM
+
+[init]
+    defaultBranch = main
+
+[core]
+    excludesfile = $HOME/.gitignore
+    editor = nvim
+
+[safe]
+    directory = ${HOME_DIR}/
+    directory = ${HOME_DIR}
+    directory = ${HOME_DIR}/.oh-my-zsh
+
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+
+[push]
+    autoSetupRemote = true
+    followTags = true
+
+[diff]
+    algorithm = histogram
+    colorMoved = plain
+    mnemonicPrefix = true
+    renames = true
+    tool = nvimdiff
+
+[difftool]
+    prompt = true
+
+[difftool "nvimdiff"]
+    cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
+
+[branch]
+    sort = -committerdate
+
+[tag]
+    sort = version:refname
+
+[column]
+    ui = auto
+
+[help]
+    autocorrect = prompt
