@@ -1,7 +1,9 @@
 return {
-    "neo-tree.nvim",
+    "nvim-neo-tree/neo-tree.nvim",
+    -- enabled = false,
     opts = {
         close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
+        open_files_do_not_replace_types = { "terminal", "Trouble", "qf", "Outline", "trouble", "edgy" },
         filesystem = {
             filtered_items = {
                 visible = false,
@@ -12,7 +14,7 @@ return {
                     "__pycache__",
                     ".history",
                 },
-                never_show = { ".DS_Store" },
+                -- never_show = { ".DS_Store" },
                 always_show = {
                     ".gitignore",
                     ".github",

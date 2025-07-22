@@ -8,3 +8,6 @@ vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 4 -- Number of spaces per tab when editing
 vim.opt.smartindent = true
+vim.opt.laststatus = 3
+vim.opt.splitkeep = "screen"
+vim.g.lazyvim_python_ruff = "ruff"

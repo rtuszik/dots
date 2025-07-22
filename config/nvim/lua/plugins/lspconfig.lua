@@ -25,6 +25,7 @@ return {
             --     },
             --   },
             -- },
+            bashls = {},
         },
         setup = {
             ruff = function(_, opts)

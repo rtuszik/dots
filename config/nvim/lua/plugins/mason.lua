@@ -9,7 +9,11 @@ return {
             "prettier",
             "ruff",
             "djlint",
-            "pyright",
+            "terraform",
+            "rustfmt",
+            "rust-analyzer",
+            "clangd",
+            "clang-format",
         },
     },
 }

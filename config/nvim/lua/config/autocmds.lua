@@ -1,3 +1,17 @@
 -- Autocmds are automatically loaded on the VeryLazy event
 -- Default autocmds that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
 -- Add any additional autocmds here
+-- ---- Autocommand to add a header line to new Lua files in the plugins directory
+-- vim.api.nvim_create_autocmd("BufNewFile", {
+--   pattern = "*/lua/plugins/*.lua",
+--   callback = function()
+--     -- Get the file path
+--     local file_path = vim.fn.expand("%:p")
+--
+--     -- Create the header line
+--     local header = "-- " .. file_path
+--
+--     -- Insert the header line at the top of the file
+--     vim.api.nvim_buf_set_lines(0, 0, 0, false, { header, "" })
+--   end,
+-- })

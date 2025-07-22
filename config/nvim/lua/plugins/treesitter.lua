@@ -24,6 +24,8 @@ return {
             "ssh_config",
             "tmux",
             "vim",
+            "zig",
+            "rust",
         })
     end,
 }

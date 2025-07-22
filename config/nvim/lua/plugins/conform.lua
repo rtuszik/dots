@@ -16,6 +16,9 @@ return {
                 yaml = { "prettier" },
                 markdown = { "prettier" },
                 graphql = { "prettier" },
+                terraform = { "terraform_fmt" },
+                rust = { "rustfmt" },
+                c = { "clang-format" },
             },
             formatters = {
                 prettier = {
