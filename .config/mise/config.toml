@@ -1,0 +1,27 @@
+[tools]
+amp = "latest"
+"cargo:darya" = "latest"
+"cargo:deadbranch" = "latest"
+"cargo:lumen" = "latest"
+go = "1.26"
+grype = "latest"
+node = "lts"
+opengrep = "latest"
+opentofu = "latest"
+pi = "latest"
+python = "3.14"
+ruby = "3.4.9"
+rust = "latest"
+sops = "latest"
+tree-sitter = "latest"
+uv = "latest"
+zig = "latest"
+zizmor = "latest"
+
+[settings]
+idiomatic_version_file_enable_tools = ["node", "ruby"]
+env_file = ".env"
+status = { missing_tools = "if_other_versions_installed", show_env = false }
+
+[settings.ruby]
+compile = false

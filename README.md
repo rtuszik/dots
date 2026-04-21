@@ -1,21 +1,11 @@
-# WIP
+# dotfiles
 
----
+A somewhat pruned version of my macOS dotfiles.
 
-# dots
+These are largely compatible with Linux as well, though I personally use [Chezmoi](https://www.chezmoi.io/) with templates for some minor changes.
 
-🚀 Portable dotfiles for MacOS and Linux
+Languages are installed/managed using [mise-en-place](https://mise.jdx.dev).
 
-## Requirements
+Tools are usually installed through [Homebrew](https://brew.sh) on both Linux and macOS.
 
-- Eza
-- ripgrep
-- fd
-- duf
-- nvim
-- fzf
-- bat
-- procs
-- tmux
-- sesh
-  TODO: add more
+I use [renovate](https://docs.renovatebot.com/examples/self-hosting/) to keep my [mise/config.toml](.config/mise/config.toml) up to date.

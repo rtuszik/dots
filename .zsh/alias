@@ -1,0 +1,37 @@
+## config aliases
+
+alias zc="cd $HOME/.config/"
+
+## eza aliases
+alias ls='eza -lh --color=always --group-directories-first --icons'
+alias ll='eza -la --icons --octal-permissions --group-directories-first'
+alias l='eza -bGF --header --git --color=always --group-directories-first --icons'
+alias llm='eza -lbGd --header --git --sort=modified --color=always --group-directories-first --icons'
+alias la='eza --long --all --group --group-directories-first'
+alias lx='eza -lbhHigUmuSa@ --time-style=long-iso --git --color-scale --color=always --group-directories-first --icons'
+alias tree='eza --tree --git --color=always --group-directories-first --icons'
+
+## tool replacements
+alias cat="bat"
+alias ps="procs"
+# alias grep="rg"
+alias df="duf"
+# breaks too often :(
+# alias find="fd"
+
+## program-specific
+alias python="/usr/bin/python3"
+alias py='python3'
+alias vim='nvim'
+alias nv="nvim"
+n() { if [ "$#" -eq 0 ]; then nvim .; else nvim "$@"; fi; }
+alias dps="docker ps -a | bat"
+
+alias gg="lazygit" # mirrors lazyvim
+
+# Directories
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+
+alias pbc="pbcopy"

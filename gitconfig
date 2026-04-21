@@ -8,11 +8,11 @@
 [core]
     excludesfile = $HOME/.gitignore
     editor = nvim
+    pager = delta
 
 [safe]
     directory = ${HOME_DIR}/
     directory = ${HOME_DIR}
-    directory = ${HOME_DIR}/.oh-my-zsh
 
 [filter "lfs"]
     clean = git-lfs clean -- %f
@@ -48,3 +48,18 @@
 
 [help]
     autocorrect = prompt
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true  # use n and N to move between diff sections
+    dark = true
+    hyperlinks = true
+    side-by-side = true
+
+[merge]
+    conflictStyle = zdiff3
+
+[http]
+    postBuffer = 524288000

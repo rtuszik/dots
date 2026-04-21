@@ -1,0 +1,61 @@
+
+[ -f "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh" ] && source "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh"
+plug "zsh-users/zsh-autosuggestions"
+plug "zap-zsh/supercharge"
+plug "zap-zsh/zap-prompt"
+plug "zsh-users/zsh-syntax-highlighting"
+
+setopt appendhistory
+setopt share_history
+setopt auto_cd
+
+autoload -Uz compinit
+compinit
+
+autoload -Uz bashcompinit
+bashcompinit
+
+eval "$(uv generate-shell-completion zsh)"
+eval "$(uvx --generate-shell-completion zsh)"
+
+eval "$(gh signoff completion)"
+
+source <(fzf --zsh)
+
+
+hvals() {
+  if [[ "$1" == "-h" || "$1" == "--help" || $# -eq 0 ]]; then
+    echo "Usage:"
+    echo "  hvals <chart> <repo-url>        # HTTP repo"
+    echo "  hvals oci://<ref>               # OCI ref"
+    echo "Example:"
+    echo "  hvals repo https://repo.github.io/repo/"
+    echo "  hvals oci://dhi.io/kube-prometheus-stack-chart"
+    return 0
+  fi
+
+  if [[ "$1" == oci://* ]]; then
+    helm show values "${1}" | bat -l yaml
+  else
+    if [[ $# -lt 2 ]]; then
+      echo "Error: HTTP repo requires both <chart> and <repo-url>" >&2
+      return 1
+    fi
+    helm show values "${1}" --repo "${2}" | bat -l yaml
+  fi
+}
+
+renovate-list() {
+  LOG_FORMAT=json LOG_LEVEL=info renovate --platform=local --dry-run=extract 2>/dev/null \
+    | jq -rR 'fromjson? | select(.msg == "Extracted dependencies") | .packageFiles | to_entries[] as $m | $m.value[] | .packageFile as $pf | .deps[] | [$m.key, $pf, .depName, (.currentValue // .currentVersion // "")] | @tsv' \
+    | sort -u
+}
+
+y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}

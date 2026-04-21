@@ -1,0 +1,11 @@
+eval "$(mise activate zsh)"
+eval "$(starship init zsh)"
+eval "$(zoxide init --hook prompt zsh)"
+eval "$(direnv hook zsh)"
+eval "$(alman init zsh)"
+
+[ -s "/Users/robintuszik/.bun/_bun" ] && source "/Users/robintuszik/.bun/_bun"
+# bun interactive bits (completion/hook)
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
