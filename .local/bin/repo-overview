@@ -1,0 +1,83 @@
+#!/usr/bin/env nu
+# repo-overview.nu — Quick diagnostic of any git repo before reading code.
+# Usage: nu repo-overview.nu [path-to-repo]
+
+def main [repo: path = "."] {
+    # Validate it's a git repo
+    do { git -C $repo rev-parse --git-dir } | complete
+    | if $in.exit_code != 0 {
+        error make { msg: $"'($repo)' is not a git repository." }
+    }
+
+    cd $repo
+
+    # ── 1. Most-Changed Files ────────────────────────────────
+    print $"\n🔥 (ansi yellow_bold)Top 20 Most-Changed Files(ansi reset) \(last year\)"
+
+    git log --format=format: --name-only --since="1 year ago"
+    | lines
+    | where { |l| $l != "" }
+    | group-by { |l| $l }
+    | items { |file, occurrences| { file: $file, changes: ($occurrences | length) } }
+    | sort-by changes --reverse
+    | first 20
+    | table
+
+    # ── 2. Contributors ──────────────────────────────────────
+    print $"\n👥 (ansi cyan_bold)Contributors(ansi reset)"
+
+    let parse_shortlog = {
+        lines
+        | where { |l| $l != "" }
+        | each { |l|
+            let parts = ($l | str trim | parse "{commits}\t{author}")
+            { author: $parts.0.author, commits: ($parts.0.commits | into int) }
+        }
+    }
+
+    print "(ansi dim)All-time:(ansi reset)"
+    git shortlog -sn --no-merges | do $parse_shortlog | table
+
+    print "(ansi dim)Active last 6 months:(ansi reset)"
+    git shortlog -sn --no-merges --since="6 months ago" | do $parse_shortlog | table
+
+    # ── 3. Bug Hotspots ──────────────────────────────────────
+    print $"\n🐛 (ansi red_bold)Top 20 Bug Hotspot Files(ansi reset)"
+
+    git log -i -E --grep="fix|bug|broken" --name-only --format=''
+    | lines
+    | where { |l| $l != "" }
+    | group-by { |l| $l }
+    | items { |file, occurrences| { file: $file, bug_commits: ($occurrences | length) } }
+    | sort-by bug_commits --reverse
+    | first 20
+    | table
+
+    # ── 4. Commit Velocity ───────────────────────────────────
+    print $"\n📈 (ansi green_bold)Commit Velocity by Month(ansi reset)"
+
+    git log --format='%ad' --date=format:'%Y-%m'
+    | lines
+    | where { |l| $l != "" }
+    | group-by { |l| $l }
+    | items { |month, commits| { month: $month, commits: ($commits | length) } }
+    | sort-by month
+    | table
+
+    # ── 5. Firefighting Frequency ────────────────────────────
+    print $"\n🚨 (ansi magenta_bold)Reverts / Hotfixes / Rollbacks(ansi reset) \(last year\)"
+
+    let crisis = (
+        git log --oneline --since="1 year ago"
+        | lines
+        | where { |l| $l =~ '(?i)revert|hotfix|emergency|rollback' }
+    )
+
+    if ($crisis | is-empty) {
+        print "(ansi dim)None found — either stable or commit messages aren't descriptive.(ansi reset)"
+    } else {
+        $crisis | each { |l| print $l }
+    }
+
+    print $"\n(ansi green)Done. ✓(ansi reset)"
+}

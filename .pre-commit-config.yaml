@@ -1,0 +1,8 @@
+# See https://prek.j178.dev for more information.
+# yaml-language-server: $schema=https://www.schemastore.org/pre-commit-config.json
+---
+repos:
+    - repo: https://github.com/betterleaks/betterleaks
+      rev: v1.8.1
+      hooks:
+        - id: betterleaks

@@ -1,3 +1,14 @@
+cask "productdevbook/tap/portkiller"
+
+tap "anchore/syft"
+tap "anchore/grype"
+tap "anchore/grant"
+
+brew "syft"
+brew "grype"
+brew "grant"
+
+brew "aws-sdk-cpp"
 brew "bat"
 brew "bat-extras"
 brew "direnv"
