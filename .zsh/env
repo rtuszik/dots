@@ -3,17 +3,25 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export EDITOR='nvim'
 export SUDO_EDITOR="$EDITOR"
 
-export SOPS_AGE_KEY_FILE="$HOME/.config/sops/age/age.key"
+export DO_NOT_TRACK=true
 
+export SOPS_AGE_KEY_FILE="$HOME/.config/sops/age/age.key"
+export RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep/.rgrc"
+
+typeset -U path PATH
+export PATH="/usr/bin:/bin:/usr/sbin:/sbin:${PATH:-}"
 export PATH="/opt/homebrew/bin:$PATH"
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="/opt/homebrew/opt/mongodb-community@4.4/bin:$PATH"
 
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/Library/Python/3.9/bin:$PATH"
 
 export PATH="$HOME/go/bin:$PATH"
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
-export RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep/.rgrc"
-export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+
+eval "$(~/.local/bin/mise activate zsh)"

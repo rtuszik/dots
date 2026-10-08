@@ -1,13 +1,9 @@
-
 [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh" ] && source "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh"
-plug "zsh-users/zsh-autosuggestions"
-plug "zap-zsh/supercharge"
-plug "zap-zsh/zap-prompt"
-plug "zsh-users/zsh-syntax-highlighting"
+plug "QuarticCat/zsh-smartcache"
 
-setopt appendhistory
-setopt share_history
-setopt auto_cd
+# completions on fpath before compinit
+fpath+=(~/.config/hcloud/completion/zsh)
+fpath+=(~/.docker/completions)
 
 autoload -Uz compinit
 compinit
@@ -15,23 +11,25 @@ compinit
 autoload -Uz bashcompinit
 bashcompinit
 
-eval "$(uv generate-shell-completion zsh)"
-eval "$(uvx --generate-shell-completion zsh)"
+# order: fzf-tab after compinit/before wrappers, syntax-highlighting last
+plug "zap-zsh/supercharge"
+setopt share_history
+plug "Aloxaf/fzf-tab"
+plug "Freed-Wu/fzf-tab-source"
+plug "wintermi/zsh-brew"
+plug "MichaelAquilina/zsh-you-should-use"
+ZSH_AUTOSUGGEST_MANUAL_REBIND=1
+plug "zsh-users/zsh-autosuggestions"
+plug "zsh-users/zsh-syntax-highlighting"
+plug "romkatv/powerlevel10k"
 
-eval "$(gh signoff completion)"
+# [B]rew [I]nstall [P]ackage
+function bip() {
+  local inst=$(brew search "$@" | fzf -m)
 
-source <(fzf --zsh)
-
-
-hvals() {
-  if [[ "$1" == "-h" || "$1" == "--help" || $# -eq 0 ]]; then
-    echo "Usage:"
-    echo "  hvals <chart> <repo-url>        # HTTP repo"
-    echo "  hvals oci://<ref>               # OCI ref"
-    echo "Example:"
-    echo "  hvals repo https://repo.github.io/repo/"
-    echo "  hvals oci://dhi.io/kube-prometheus-stack-chart"
-    return 0
+  if [[ $inst ]]; then
+    for prog in $(echo $inst);
+    do; brew install $prog; done;
   fi
 
   if [[ "$1" == oci://* ]]; then
@@ -40,22 +38,58 @@ hvals() {
     if [[ $# -lt 2 ]]; then
       echo "Error: HTTP repo requires both <chart> and <repo-url>" >&2
       return 1
+git() {
+  if [[ $1 == clone ]]; then
+    shift
+    # collect only the non-flag args (the URL, normally)
+    local args=("$@")
+    local positionals=(${args:#-*})
+
+    if (( ${#positionals} == 1 )); then
+      # simple `git clone <url>` — the case you'll fat-finger
+      ghq get "$@"
+    else
+      # custom dest dir or flags ghq won't understand: let real git handle it
+      print -u2 "git: passing through to real clone (ghq can't take a dest/these flags)"
+      command git clone "$@"
     fi
-    helm show values "${1}" --repo "${2}" | bat -l yaml
+  else
+    command git "$@"
   fi
 }
 
-renovate-list() {
-  LOG_FORMAT=json LOG_LEVEL=info renovate --platform=local --dry-run=extract 2>/dev/null \
-    | jq -rR 'fromjson? | select(.msg == "Extracted dependencies") | .packageFiles | to_entries[] as $m | $m.value[] | .packageFile as $pf | .deps[] | [$m.key, $pf, .depName, (.currentValue // .currentVersion // "")] | @tsv' \
-    | sort -u
+function krew-install() {
+  local plugin
+
+  plugin=$(
+    kubectl krew search |
+      awk 'NR > 1 {print $1}' |
+      fzf \
+        --height=80% \
+        --layout=reverse \
+        --border \
+        --prompt='krew> ' \
+        --preview='kubectl krew info {}' \
+        --preview-window='right:60%:wrap'
+  ) || return
+
+  [[ -z "$plugin" ]] && return
+
+  kubectl krew info "$plugin"
+
+  if gum confirm "Install $plugin?"; then
+    kubectl krew install "$plugin"
+  fi
 }
 
-y() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-	yazi "$@" --cwd-file="$tmp"
-	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-		builtin cd -- "$cwd"
-	fi
-	rm -f -- "$tmp"
-}
+
+smartcache eval uv generate-shell-completion zsh
+smartcache eval uvx --generate-shell-completion zsh
+
+smartcache eval fzf --zsh
+
+# Use ripgrep as default command
+export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
+
+# emacs mode
+bindkey -e

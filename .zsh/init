@@ -1,11 +1,19 @@
-eval "$(mise activate zsh)"
-eval "$(starship init zsh)"
-eval "$(zoxide init --hook prompt zsh)"
-eval "$(direnv hook zsh)"
-eval "$(alman init zsh)"
 
-[ -s "/Users/robintuszik/.bun/_bun" ] && source "/Users/robintuszik/.bun/_bun"
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+eval "$(mise activate zsh --shims)"
+smartcache eval zoxide init --hook pwd zsh
+smartcache eval alman init zsh
+
+smartcache eval scw autocomplete script shell=zsh
+
+
+source ~/.orbstack/shell/init.zsh 2>/dev/null || :
+
 # bun interactive bits (completion/hook)
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
-[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

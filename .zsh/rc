@@ -1,4 +1,5 @@
-source ~/.zsh/shell
 source ~/.zsh/env
+source ~/.zsh/shell
 source ~/.zsh/init
 source ~/.zsh/alias
+
