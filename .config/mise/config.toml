@@ -1,16 +1,22 @@
 [tools]
 amp = "latest"
+aube = "latest"
+betterleaks = "latest"
 "cargo:darya" = "latest"
 "cargo:deadbranch" = "latest"
 "cargo:lumen" = "latest"
-go = "1.26"
+go = "1.27.0"
 grype = "latest"
+kustomize = "latest"
 node = "lts"
+"npm:mcp-remote" = "0.1.41"
+"npm:renovate" = "latest"
 opengrep = "latest"
 opentofu = "latest"
-pi = "latest"
+oxfmt = "latest"
+prek = "latest"
 python = "3.14"
-ruby = "3.4.9"
+ruby = "4.0.6"
 rumdl = "latest"
 rust = "latest"
 sops = "latest"
@@ -18,11 +24,22 @@ tree-sitter = "latest"
 uv = "latest"
 zig = "latest"
 zizmor = "latest"
+cocogitto = "7.0.0"
+container = "latest"
+hk = "1.56.1"
+"github:yetidevworks/drydock" = "latest"
+"npm:@modelcontextprotocol/inspector" = "latest"
 
 [settings]
-idiomatic_version_file_enable_tools = ["node", "ruby"]
+idiomatic_version_file_enable_tools = ["node", "ruby", "python"]
 env_file = ".env"
 status = { missing_tools = "if_other_versions_installed", show_env = false }
+lockfile = true
+experimental = true
+auto_update = true
+
+[settings.github]
+use_git_credentials = true
 
 [settings.ruby]
 compile = false

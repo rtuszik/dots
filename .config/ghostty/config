@@ -5,15 +5,18 @@ shell-integration = detect
 shell-integration-features = sudo
 
 auto-update = download
-auto-update-channel = tip
+auto-update-channel = stable
 
 ## Font
-font-family = Iosevka Term
+# font-family = Iosevka Term Bold
+# font-family = Iosevka Nerd Font Mono Bold
+font-family = ZedMono Nerd Font Mono Bold
+# font-family = MesloLGL Nerd Font Mono Bold
+# font-family = Ioskeley Mono
 # font-family = JetBrains Mono
 # font-family = Droid Sans Mono
 # font-family = Fira Mono
 # font-family = Hack
-# font-family = Ioskeley Mono
 # font-family = Meslo LG S
 # font-family = Red Hat Mono
 

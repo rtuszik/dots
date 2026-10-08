@@ -1,8 +1,8 @@
 ---
 git:
-    pagers:
+    diffRenderers:
         # - pager: critique --stdin
-        - pager: delta --dark --paging=never
+        - command: delta --dark --paging=never
 theme:
     activeBorderColor:
         - "#cba6f7"
