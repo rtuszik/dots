@@ -1,0 +1,13 @@
+[package]
+name = "cli-tools"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+serde_json = "1"
+
+[profile.release]
+strip = true
+opt-level = "z"
+lto = true

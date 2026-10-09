@@ -1,0 +1,28 @@
+[tasks.fmt]
+description = "Format sources"
+dir = "{{ config_root }}"
+run = "cargo fmt"
+
+[tasks.fmt-check]
+description = "Check formatting"
+dir = "{{ config_root }}"
+run = "cargo fmt --check"
+
+[tasks.clippy]
+description = "Lint (warnings = errors)"
+dir = "{{ config_root }}"
+run = "cargo clippy --all-targets -- -D warnings"
+
+[tasks.build]
+description = "Build all tools (release)"
+dir = "{{ config_root }}"
+run = "cargo build --release"
+
+[tasks.test]
+description = "Run tests"
+dir = "{{ config_root }}"
+run = "cargo test"
+
+[tasks.check]
+description = "fmt-check + clippy + test + build"
+depends = ["fmt-check", "clippy", "test", "build"]
