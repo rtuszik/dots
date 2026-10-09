@@ -24,6 +24,19 @@
     autoSetupRemote = true
     followTags = true
 
+[alias]
+    sttaus = status
+    br = branch
+    st = status
+    co = checkout
+    lg = log -p
+    lol = log --graph --decorate --pretty=oneline --abbrev-commit
+    lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+    ls = ls-files
+    fa = fetch --all
+    rb = rebase
+    df = diff --staged
+
 [diff]
     algorithm = histogram
     colorMoved = plain
@@ -63,3 +76,21 @@
 
 [http]
     postBuffer = 524288000
+
+[pull]
+	rebase = true
+
+[rebase]
+	autoStash = true
+
+[http]
+    postBuffer = 524288000
+
+[ghq]
+    root = ~/src
+
+[gpg]
+  format = ssh
+
+[commit]
+  gpgsign = true
