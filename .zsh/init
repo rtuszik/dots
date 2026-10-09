@@ -9,11 +9,7 @@ smartcache eval alman init zsh
 
 smartcache eval scw autocomplete script shell=zsh
 
-
-source ~/.orbstack/shell/init.zsh 2>/dev/null || :
-
 # bun interactive bits (completion/hook)
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-
 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
